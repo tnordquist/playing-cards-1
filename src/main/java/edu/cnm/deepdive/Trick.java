@@ -1,8 +1,10 @@
 package edu.cnm.deepdive;
 
+import edu.cnm.deepdive.Suit.Color;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -12,8 +14,10 @@ public class Trick {
 
     Random rng = new SecureRandom();
     List<Card> deck = createDeck(rng);
+    List<Card> redPile = new ArrayList<>();
+    List<Card> blackPile = new ArrayList<>();
+    sortCards(deck, redPile, blackPile);
 
-    // TODO Sort the deck into two piles, based on the rules of the trick.
     // TODO Swap a random number of cards between the two piles.
     // TODO Sort the piles.
     // TODO Count & print out the cards and the count.
@@ -28,5 +32,17 @@ public class Trick {
     }
     Collections.shuffle(deck, rng);
     return deck;
+  }
+
+  private static void sortCards(List<Card> deck, List<Card> redPile, List<Card> blackPile) {
+    for (Iterator<Card> iter = deck.iterator(); iter.hasNext(); ) {
+      Card selector = iter.next();
+      Card card = iter.next();
+      if (selector.getSuit().getColor() == Color.RED) {
+        redPile.add(card);
+      } else {
+        blackPile.add(card);
+      }
+    }
   }
 }
